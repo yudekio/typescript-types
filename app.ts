@@ -180,3 +180,66 @@ class Person2 {
     this.birthDate = birthDate;
   }
 }
+
+class Person3 {
+  constructor(private firstName: string, private lastName: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+  getFullName(): string {
+    return `${this.firstName} ${this.lastName}`;
+  }
+  describe(): string {
+    return `This is ${this.firstName} ${this.lastName}.`;
+  }
+}
+
+// inheritance
+class Employee extends Person3 {
+  constructor(firstName: string, lastName: string, private jobTitle: string) {
+    // call the constructor of the Person class:
+    super(firstName, lastName);
+  }
+
+  describe(): string {
+    return super.describe() + `I'm a ${this.jobTitle}`; // overriding
+  }
+}
+
+// static methods
+
+// abstract classes
+abstract class Employee4 {
+  constructor(private firstName: string, private lastName: string) {}
+  abstract getSalary(): number;
+  get fullName(): string {
+    return `${this.firstName} ${this.lastName}`;
+  }
+  compensationStatement(): string {
+    return `${this.fullName} makes ${this.getSalary()} a month.`;
+  }
+}
+
+// Cannot create a new object from it
+
+class FullTimeEmployee extends Employee4 {
+  constructor(firstName: string, lastName: string, private salary: number) {
+    super(firstName, lastName);
+  }
+  getSalary(): number {
+    return this.salary;
+  }
+}
+
+// An abstract class has at least one abstract method
+
+// interface
+
+interface Person5 {
+  firstName: string;
+  lastName: string;
+}
+
+function getName(person: Person5) {
+  return `${person.firstName} ${person.lastName}`;
+}
