@@ -1,4 +1,4 @@
-const heading: HTMLHeadingElement | null = document.querySelector("h1");
+// const heading: HTMLHeadingElement | null = document.querySelector("h1");
 
 let person: {
   name: string;
@@ -99,7 +99,7 @@ let result;
 
 // void type
 
-function log2(msg): void {
+function log2(msg: any): void {
   console.log(msg);
 }
 
@@ -303,10 +303,10 @@ let emp: Employee6 = {
 
 // Type casting & type assertion
 // as keyword
-let input = document.querySelector('input[type="text"]') as HTMLInputElement;
+// let input = document.querySelector('input[type="text"]') as HTMLInputElement;
 
 // <> operator
-let input2 = <HTMLInputElement>document.querySelector('input[type="text"]');
+// let input2 = <HTMLInputElement>document.querySelector('input[type="text"]');
 
 // TypeScript Generics
 
@@ -360,7 +360,7 @@ class Stack<T> {
     }
     this.elements.push(element);
   }
-  pop(): T {
+  pop(): T | undefined {
     if (this.elements.length === 0) {
       throw new Error("The stack is empty!");
     }
@@ -410,3 +410,10 @@ export { Validator as StringVal };
 export type alphanumeric = string | number;
 
 // default export (only one is allowed)
+
+// Node.js integration
+
+// tsc --init (create tsconfig.json)
+
+console.log("test");
+console.log("test2");
