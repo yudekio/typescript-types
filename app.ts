@@ -19,12 +19,12 @@ let price: number;
 
 let bin = 0b100;
 
-let big: bigint = 9020320302939n;
+// let big: bigint = 9020320302939n;
 
 // Number (with uppercase) - refers to the non-primitive boxed object.
 
 // string type
-let profile: string = `I'm ${big}`;
+// let profile: string = `I'm ${big}`;
 
 // boolean type
 let pending: boolean = true;
@@ -310,9 +310,12 @@ let input2 = <HTMLInputElement>document.querySelector('input[type="text"]');
 
 // TypeScript Generics
 
-function getRandom<T>(arr: T[]): T {
-  let randomIndex = Math.floor(Math.random() * items.length);
-  return items[randomIndex];
+function getRandom<T>(arr: T[]): T | null {
+  if (arr.length === 0) {
+    return null;
+  }
+  let randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
 }
 
 let randomEl = getRandom<number>([1, 2, 3]);
@@ -324,3 +327,86 @@ function merge<U, V>(obj1: U, obj2: V) {
     ...obj2,
   };
 }
+
+// adding constraint
+// extends
+function merge2<U extends object, V extends object>(obj1: U, obj2: V) {
+  return {
+    ...obj1,
+    ...obj2,
+  };
+}
+
+// keyof extends - constains a type that is the property of another object
+function prop<T, K extends keyof T>(obj: T, key: K) {
+  return obj[key];
+}
+
+// Generic classes
+// Stack - data structure that works on the last-in-first-out (LIFO) principle
+class Stack<T> {
+  private elements: T[] = [];
+
+  constructor(private size: number) {}
+  isEmpty(): boolean {
+    return this.elements.length === 0;
+  }
+  isFull(): boolean {
+    return this.elements.length === this.size;
+  }
+  push(element: T): void {
+    if (this.elements.length === this.size) {
+      throw new Error("The stack is overflow!");
+    }
+    this.elements.push(element);
+  }
+  pop(): T {
+    if (this.elements.length === 0) {
+      throw new Error("The stack is empty!");
+    }
+    return this.elements.pop();
+  }
+}
+
+let numbers = new Stack<number>(5);
+
+// Generic interfaces
+// object
+interface Pair<K, V> {
+  key: K;
+  value: V;
+}
+
+let month: Pair<string, number> = {
+  key: "Jan",
+  value: 1,
+};
+
+// method
+interface Collection<T> {
+  add(o: T): void;
+  remove(o: T): void;
+}
+
+// index types
+
+interface Options<T> {
+  [name: string]: T;
+}
+
+let inputOptions: Options<boolean> = {
+  disabled: false,
+  visible: true,
+};
+
+// Modules
+export interface Validator {
+  isValid(s: string): boolean;
+}
+
+export { Validator as StringVal };
+
+// exporting types
+export type alphanumeric = string | number;
+
+// default export (only one is allowed)
