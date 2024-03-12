@@ -99,7 +99,7 @@ let result;
 
 // void type
 
-function log(msg): void {
+function log2(msg): void {
   console.log(msg);
 }
 
@@ -110,7 +110,7 @@ let useless: void = undefined;
 
 // never type
 
-function raiseError(msg: string): never {
+function raiseError3(msg: string): never {
   throw new Error(msg);
 }
 
@@ -125,7 +125,7 @@ let message: chars; // same as string type
 let click: "click" | "mouseup" | 2;
 
 // function type
-function multiply(a: number, b: number, c?: number): number {
+function multiply4(a: number, b: number, c?: number): number {
   // optional
   if (typeof c !== "undefined") {
     return a * b * c;
@@ -134,12 +134,12 @@ function multiply(a: number, b: number, c?: number): number {
 }
 
 // default parameters
-function discount(price: number = 0.05) {
+function discount5(price: number = 0.05) {
   ///
 }
 
 // rest parameter
-function getTotal(...numbers: number[]): number {
+function getTotal6(...numbers: number[]): number {
   let total = 0;
   numbers.forEach((num) => (total += num));
   return total;
@@ -237,9 +237,90 @@ class FullTimeEmployee extends Employee4 {
 
 interface Person5 {
   firstName: string;
-  lastName: string;
+  middleName?: string; // optional property
+  readonly lastName: string; // readonly property
 }
 
 function getName(person: Person5) {
   return `${person.firstName} ${person.lastName}`;
+}
+
+// funtion interface
+
+interface StringFormat {
+  (str: string, isUpper: boolean): string;
+}
+
+// class interface
+
+interface Json {
+  toJson(): string;
+}
+
+class Person6 implements Json {
+  constructor(private firstName: string, private lastName: string) {}
+  toJson(): string {
+    return JSON.stringify(this);
+  }
+}
+
+// extending interfaces
+
+interface Mail {
+  delete(id: number): boolean;
+}
+
+interface Mailable {
+  send(email: string): boolean;
+  queue(email: string): boolean;
+}
+
+interface FutureMailable extends Mailable, Mail {
+  later(email: string, after: number): boolean;
+}
+
+// Interface can extends classes
+
+// Intersection tybe - &
+
+interface Type1 {
+  name: string;
+}
+interface Type2 {
+  age: number;
+}
+interface Type3 {
+  id: number;
+}
+
+type Employee6 = Type1 & Type2 & Type3;
+
+let emp: Employee6 = {
+  name: "1",
+  age: 20,
+  id: 3000,
+};
+
+// Type casting & type assertion
+// as keyword
+let input = document.querySelector('input[type="text"]') as HTMLInputElement;
+
+// <> operator
+let input2 = <HTMLInputElement>document.querySelector('input[type="text"]');
+
+// TypeScript Generics
+
+function getRandom<T>(arr: T[]): T {
+  let randomIndex = Math.floor(Math.random() * items.length);
+  return items[randomIndex];
+}
+
+let randomEl = getRandom<number>([1, 2, 3]);
+
+// generic functions with multiple types
+function merge<U, V>(obj1: U, obj2: V) {
+  return {
+    ...obj1,
+    ...obj2,
+  };
 }
