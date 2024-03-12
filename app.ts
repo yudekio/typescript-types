@@ -113,3 +113,70 @@ let useless: void = undefined;
 function raiseError(msg: string): never {
   throw new Error(msg);
 }
+
+// union type
+let num: number | string = "str";
+
+// type aliases
+type chars = string;
+let message: chars; // same as string type
+
+// literal type
+let click: "click" | "mouseup" | 2;
+
+// function type
+function multiply(a: number, b: number, c?: number): number {
+  // optional
+  if (typeof c !== "undefined") {
+    return a * b * c;
+  }
+  return a * b;
+}
+
+// default parameters
+function discount(price: number = 0.05) {
+  ///
+}
+
+// rest parameter
+function getTotal(...numbers: number[]): number {
+  let total = 0;
+  numbers.forEach((num) => (total += num));
+  return total;
+}
+
+// function overloading
+function add(a: number, b: number): number;
+function add(a: string, b: string): string;
+function add(a: any, b: any): any {
+  return a + b;
+}
+
+// access modifiers
+// private - within the same class
+class Person {
+  private ssn: string;
+  private firstName: string;
+  private lastName: string;
+
+  constructor(ssn: string, firstName: string, lastName: string) {
+    this.ssn = ssn;
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  getFullName(): string {
+    return `${this.firstName} ${this.lastName}`;
+  }
+}
+
+// public - from any location
+
+// protected - within the same class and subclasses
+
+// readonly
+class Person2 {
+  constructor(readonly birthDate: Date) {
+    this.birthDate = birthDate;
+  }
+}
